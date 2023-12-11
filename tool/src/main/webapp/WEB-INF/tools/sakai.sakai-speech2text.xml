@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <registration>
 	<tool id="sakai.speed2text" 
-		title="speed2text" 
-		description="This description is set in the speed2text-tool registration file, found in the webapp/tools directory">
+		title="Speed to text" 
+		description="Call Google to convert audio of speech to text. Supporting files: mp3">
 
 		<category name="course" />
       	<category name="project" />

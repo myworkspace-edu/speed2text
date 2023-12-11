@@ -33,7 +33,8 @@ $(function () {
           contentType : false,
           success : function(result) {
             if (result) {
-                console.log(result);
+                // console.log(result);
+                updateOutput(result);
             } 
               // alert("Save OK.");
           },
@@ -44,4 +45,8 @@ $(function () {
   });
 
 });
+
+function updateOutput(content) {
+    $('#resultText').text(content);
+}
 

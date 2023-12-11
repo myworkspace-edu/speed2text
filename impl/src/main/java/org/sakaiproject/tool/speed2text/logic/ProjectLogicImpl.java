@@ -22,11 +22,13 @@ package org.sakaiproject.tool.speed2text.logic;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import mksgroup.java.common.CommandLine;
 import mksgroup.java.common.FileUtil;
 
 /**
@@ -47,7 +49,9 @@ public class ProjectLogicImpl implements ProjectLogic {
 	}
 
 	@Override
-	public String speech2Text(InputStream is, String fileName, String tmpDir) throws IOException {
+	public String speech2Text(InputStream is, String fileName, String tmpDir, String scriptPath) throws IOException {
+		String result;
+
 		String outPath = FileUtil.buildPath(tmpDir, "speech2text");
 		FileUtil.mkdir(outPath);
 		
@@ -57,9 +61,20 @@ public class ProjectLogicImpl implements ProjectLogic {
 		File outputFile = new File(outFilePath);
 		FileUtils.copyInputStreamToFile(is, outputFile);
 		
-		log.info(String.format("View temporary file at' %s'", outFilePath));
+		log.info(String.format("View temporary file at' %s'", outputFile));
+		
+    	String[] cmdScripts = new String[] {"python", "audio2text.py", outFilePath};
+    	
+    	try {
+    		result = CommandLine.execute(cmdScripts, scriptPath);
+    	} catch (Exception ex) {
+    		result = ex.getMessage();
+    		log.error(String.format("Executing commands '%s' from folder '%s':\n%s", Arrays.toString(cmdScripts), scriptPath, ex.getMessage()), ex);
+    	}
+		
+		log.info(String.format("Executing commands '%s' from folder '%s':\n%s", Arrays.toString(cmdScripts), scriptPath, result));
 
-		return "OK";
+		return result;
 	}
 
 }

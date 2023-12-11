@@ -34,8 +34,9 @@ public interface ProjectLogic {
 	 * Convert audio of speech to text.
 	 * @param tmpDir Temporary folder of system or Tomcat.
 	 * @param fileName name of uploaded file
+	 * @param cmdScripts 
 	 * @return text of audio file.
 	 * @throws IOException 
 	 */
-	String speech2Text(InputStream is, String fileName, String tmpDir) throws IOException;
+	String speech2Text(InputStream is, String fileName, String tmpDir, String scriptPath) throws IOException;
 }

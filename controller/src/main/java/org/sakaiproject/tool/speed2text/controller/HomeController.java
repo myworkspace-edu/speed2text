@@ -21,6 +21,7 @@ package org.sakaiproject.tool.speed2text.controller;
 
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -45,6 +46,9 @@ public class HomeController extends BaseController {
     
 	@Autowired
 	ProjectLogic projectLogic;
+	
+	@Autowired
+	ServletContext context;
 	/**
 	 * Simply selects the home view to render by returning its name.
      * @return 
@@ -64,7 +68,9 @@ public class HomeController extends BaseController {
     @PostMapping(value = "/speech2text/uploadfile")
     @ResponseBody
 	public String processUploadFle(@ModelAttribute("model") SpeechModel model, BindingResult bindingResult) throws IOException {
-    	String text = projectLogic.speech2Text(model.getAttachment().getInputStream(), model.getAttachment().getOriginalFilename(), TMP_DIR);
+    	String folderScript = context.getRealPath("WEB-INF/classes");
+
+    	String text = projectLogic.speech2Text(model.getAttachment().getInputStream(), model.getAttachment().getOriginalFilename(), TMP_DIR, folderScript);
 
     	return text;
 	}

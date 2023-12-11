@@ -1,6 +1,8 @@
 # came along this code in below:
 # https://www.thepythoncode.com/article/using-speech-recognition-to-convert-speech-to-text-python
 # modified it and made it more usable
+# pip install SpeechRecognition pydub
+# On Linux: sudo apt install ffmpeg
 
 
 
