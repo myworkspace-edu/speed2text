@@ -32,7 +32,11 @@
 				<artifactId>speed2text-impl</artifactId>
 				<version>23.0</version>
 			</dependency>
-
+            <dependency>
+              <groupId>mksgroup.java</groupId>
+              <artifactId>javacommon</artifactId>
+              <version>${javacommon.version}</version>
+            </dependency>
 
 		</dependencies>
 	</dependencyManagement>
@@ -50,6 +54,7 @@
         <sakai.log4j.version>2.20.0</sakai.log4j.version>
         <sakai.slf4j.version>1.7.36</sakai.slf4j.version>
         <sakai.poi.version>5.2.3</sakai.poi.version>
+        <javacommon.version>0.7.2</javacommon.version>
 	</properties>
 
 	<repositories>

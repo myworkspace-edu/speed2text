@@ -19,39 +19,32 @@
 
 package org.sakaiproject.tool.speed2text.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.sakaiproject.tool.speed2text.controller.model.SpeechModel;
+import org.sakaiproject.tool.speed2text.logic.ProjectLogic;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
  * Handles requests for the application home page.
+ * @author Thach.Le (MyWorkpace App Marketplace)
  */
 @Controller
 public class HomeController extends BaseController {
- 
-	   /**
-     * This method is called when binding the HTTP parameter to bean (or model).
-     * 
-     * @param binder
-     */
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        // Sample init of Custom Editor
-
-//        Class<List<ItemKine>> collectionType = (Class<List<ItemKine>>)(Class<?>)List.class;
-//        PropertyEditor orderNoteEditor = new MotionRuleEditor(collectionType);
-//        binder.registerCustomEditor((Class<List<ItemKine>>)(Class<?>)List.class, orderNoteEditor);
-
-    }
     
+	@Autowired
+	ProjectLogic projectLogic;
 	/**
 	 * Simply selects the home view to render by returning its name.
      * @return 
@@ -67,4 +60,13 @@ public class HomeController extends BaseController {
 
 		return mav;
 	}
+
+    @PostMapping(value = "/speech2text/uploadfile")
+    @ResponseBody
+	public String processUploadFle(@ModelAttribute("model") SpeechModel model, BindingResult bindingResult) throws IOException {
+    	String text = projectLogic.speech2Text(model.getAttachment().getInputStream(), model.getAttachment().getOriginalFilename(), TMP_DIR);
+
+    	return text;
+	}
+		
 }

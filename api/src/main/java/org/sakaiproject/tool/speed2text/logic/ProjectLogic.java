@@ -19,21 +19,23 @@
 
 package org.sakaiproject.tool.speed2text.logic;
 
-import java.util.List;
-
-import org.sakaiproject.tool.speed2text.model.Item;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
- * An example logic interface
+ * Business logic of the application.
  * 
- * @author Mike Jennings (mike_jennings@unc.edu)
+ * @author Thach.Le (MyWorkpace App Marketplace)
  *
  */
 public interface ProjectLogic {
 
 	/**
-	 * Get a list of Items
-	 * @return
+	 * Convert audio of speech to text.
+	 * @param tmpDir Temporary folder of system or Tomcat.
+	 * @param fileName name of uploaded file
+	 * @return text of audio file.
+	 * @throws IOException 
 	 */
-	public List<Item> getItems();
+	String speech2Text(InputStream is, String fileName, String tmpDir) throws IOException;
 }

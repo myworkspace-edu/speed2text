@@ -26,7 +26,7 @@ import org.sakaiproject.authz.api.Role;
 /**
  * An interface to abstract all Sakai related API calls in a central method that can be injected into our app.
  * 
- * @author Mike Jennings (mike_jennings@unc.edu), Thacch Ngoc Le (ThachLN@mks.com.vn)
+ * @author Thach.Le (MyWorkpace App Marketplace)
  *
  */
 public interface SakaiProxy {

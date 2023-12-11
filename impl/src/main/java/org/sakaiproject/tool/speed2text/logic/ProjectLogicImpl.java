@@ -19,45 +19,47 @@
 
 package org.sakaiproject.tool.speed2text.logic;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
-import org.springframework.stereotype.Component;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
-import lombok.extern.slf4j.Slf4j;
 
-import org.sakaiproject.tool.speed2text.model.Item;
+import lombok.extern.slf4j.Slf4j;
+import mksgroup.java.common.FileUtil;
 
 /**
  * Implementation of {@link ProjectLogic}
  * 
- * @author Mike Jennings (mike_jennings@unc.edu), ThachLN@gmail.com
+ * @author Thach.Le (MyWorkspace App Marketplace)
  *
  */
 @Service
-@Component
 @Slf4j
 public class ProjectLogicImpl implements ProjectLogic {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public List<Item> getItems() {
-		
-		List<Item> items = new ArrayList<Item>();
-		
-        items.add(new Item(1, "hello"));
-        items.add(new Item(2, "world"));
-		
-		return items;
-		
-	}
-	
 	/**
 	 * init - perform any actions required here for when this bean starts up
 	 */
 	public void init() {
 		log.info("init");
+	}
+
+	@Override
+	public String speech2Text(InputStream is, String fileName, String tmpDir) throws IOException {
+		String outPath = FileUtil.buildPath(tmpDir, "speech2text");
+		FileUtil.mkdir(outPath);
+		
+		// Out file path
+		String outFilePath = FileUtil.buildPath(outPath, fileName);
+		
+		File outputFile = new File(outFilePath);
+		FileUtils.copyInputStreamToFile(is, outputFile);
+		
+		log.info(String.format("View temporary file at' %s'", outFilePath));
+
+		return "OK";
 	}
 
 }
